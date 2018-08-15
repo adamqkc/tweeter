@@ -4,3 +4,22 @@
   margin-left: 2em;
   margin-right: 2em;
 }
+
+#tweet-container header {
+  border-bottom: 1px solid #eee;
+  padding-left: 10%;
+}
+
+#user-handle {
+  float: right;
+}
+
+#tweet-container footer {
+  border-top: 1px solid #eee; 
+  padding-left: 2%;
+}
+
+#tweet-container p {
+  padding-left: 10%;
+  padding-right: 10%;
+}
