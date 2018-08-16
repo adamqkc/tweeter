@@ -38,6 +38,7 @@ $(document).ready(function () {
   //   }
   // ];
 
+  // Loads tweets from server
   function loadTweets() {
     $.ajax('/tweets', { method: 'GET' }).then(function (text_JSON) {
       renderTweets(text_JSON);
@@ -45,6 +46,7 @@ $(document).ready(function () {
   }
   loadTweets();
 
+  // Create tweet element dynamically and append to index.HTML
   function createTweetElement(tweet) {
     let todaysDate = new Date();
     let tweetDate = new Date(tweet.created_at);
@@ -67,6 +69,7 @@ $(document).ready(function () {
     return $tweet
   }
 
+  // Renders tweet history after every tweet or page load
   function renderTweets(tweets) {
     for (let tweet in tweets) {
       let $tweet = createTweetElement(tweets[tweet]);
@@ -74,7 +77,7 @@ $(document).ready(function () {
     }
   }
 
-  // submits 
+  // Submit tweet after validation 
   $('form').on('submit', function (event) {
     event.preventDefault();
 
