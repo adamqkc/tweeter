@@ -82,12 +82,11 @@ $(document).ready(function () {
     event.preventDefault();
 
     if ($('#text-field') === '') {
-      alert('Please write something!');
+      displayErrorMessage('cannot be empty')
     } else if ($('#text-field') > 140) {
-      alert('Too many characters!');
+      displayErrorMessage('must be less than 140 characters')
     } else {
       let text = $('#text-field').serialize();
-
       $.post('/tweets', text).done(function (data) {
         let newTweet = createTweetElement(data);
         console.log(newTweet);
@@ -96,7 +95,11 @@ $(document).ready(function () {
       });
     };
   });
-
+  
+  function displayErrorMessage(message) {
+    $('#error-message').slideUp();
+    $('#error-message').text(message).css('display', 'block');
+  }
 
   // Compose button - toggle composition field to display or disappear
   $(function () {
