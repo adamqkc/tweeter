@@ -5,46 +5,49 @@
 */
 
 $(document).ready(function () {
-  // Test / driver code (temporary). Eventually will get this from the server.
-  // const tweetData = [{
-  //   "user": {
-  //     "name": "Newton",
-  //     "avatars": {
-  //       "small": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-  //       "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-  //       "large": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-  //     },
-  //     "handle": "@SirIsaac"
-  //   },
-  //   "content": {
-  //     "text": "If I have seen further it is by standing on the shoulders of giants"
-  //   },
-  //   "created_at": 1461116232227
-  // },
-  //   {
-  //     "user": {
-  //       "name": "Newton",
-  //       "avatars": {
-  //         "small": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-  //         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-  //         "large": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-  //       },
-  //       "handle": "@SirIsaac"
-  //     },
-  //     "content": {
-  //       "text": "If I have seen further it is by standing on the shoulders of giants"
-  //     },
-  //     "created_at": 1461116232227
-  //   }
-  // ];
-
   // Loads tweets from server
   function loadTweets() {
-    $.ajax('/tweets', { method: 'GET' }).then(function (text_JSON) {
-      renderTweets(text_JSON);
+    $.ajax({
+      method: 'GET',
+      url: '/tweets'
+    }).done(function (tweets) {
+      renderTweets(tweets);
     })
   }
   loadTweets();
+
+  // Renders tweet history after every tweet or page load
+  function renderTweets(tweets) {
+    for (let tweet in tweets) {
+      let $tweet = createTweetElement(tweets[tweet]);
+      $('#tweet-container').prepend($tweet);
+    }
+  }
+
+  // Submit tweet after validation 
+  $('form').on('submit', function (event) {
+    event.preventDefault();
+
+    // $('#error-message').css('display', 'none');
+
+    if ($('#text-field') === '') {
+      // displayErrorMessage('cannot be empty');
+    } else if ($('#text-field') > 140) {
+      // displayErrorMessage('must be less than 140 characters');
+    } else {
+      let text = $('#text-field').serialize();
+      $.ajax({
+        method: 'POST',
+        url: '/tweets',
+        data: text,
+      }).done(function (data) {
+        let tweet = createTweetElement(data);
+        $('#tweet-container').prepend(tweet);
+        $('#text-field').val('');
+      })
+    };
+  });
+
 
   // Create tweet element dynamically and append to index.HTML
   function createTweetElement(tweet) {
@@ -54,55 +57,29 @@ $(document).ready(function () {
     let $tweet = `
       <article>
         <header>
-          <img src="${tweet.user.avatars.small}" alt="">
-          <span id="user-name">${tweet.user.name}</span>
-          <span id="user-handle">${tweet.user.handle}</span>
+          <img src="${escape(tweet.user.avatars.small)}" alt="">
+          <span id="user-name">${escape(tweet.user.name)}</span>
+          <span id="user-handle">${escape(tweet.user.handle)}</span>
         </header>
         
-        <p>${tweet.content.text}</p>
+        <p>${escape(tweet.content.text)}</p>
         
         <footer>
-          <span>${tweetAge} days ago </span>
+          <span>${escape(tweetAge)} days ago </span>
         </footer>
       </article>
     `
     return $tweet
   }
 
-  // Renders tweet history after every tweet or page load
-  function renderTweets(tweets) {
-    for (let tweet in tweets) {
-      let $tweet = createTweetElement(tweets[tweet]);
-      $('#tweet-container').append($tweet); 
-    }
-  }
-
-  // Submit tweet after validation 
-  $('form').on('submit', function (event) {
-    event.preventDefault();
-    
-    $('#error-message').css('display', 'none');
-    
-    if ($('#text-field') === '') {
-      displayErrorMessage('cannot be empty');
-    } else if ($('#text-field') > 140) {
-      displayErrorMessage('must be less than 140 characters');
-    } else {
-      let text = $('#text-field').serialize();
-      $.post('/tweets', text).done(function (data) {
-        let newTweet = createTweetElement(data);
-        $('#tweet-container').prepend(newTweet);
-        $('#text-field').val('');
-      });
-    };
-  });
   
-  function displayErrorMessage(message) {
-    $('#error-message').fadeIn();
-    $('#error-message').text(message).css('display', 'block');
-  }
+  // function displayErrorMessage(message) {
+  //   $('#error-message').fadeIn();
+  //   $('#error-message').text(message).css('display', 'block');
+  // }
 
-  // Compose button - toggle composition field to display or disappear
+
+  // Compose button - toggle to show composition field
   $(function () {
     $("#compose-button").on("click", function (event) {
       if ($(".new-tweet").css("display") === "none") {
@@ -113,4 +90,12 @@ $(document).ready(function () {
       }
     });
   });
+
+
+  // Escapes dangerous scripts
+  function escape(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
 });
