@@ -80,16 +80,17 @@ $(document).ready(function () {
   // Submit tweet after validation 
   $('form').on('submit', function (event) {
     event.preventDefault();
-
+    
+    $('#error-message').css('display', 'none');
+    
     if ($('#text-field') === '') {
-      displayErrorMessage('cannot be empty')
+      displayErrorMessage('cannot be empty');
     } else if ($('#text-field') > 140) {
-      displayErrorMessage('must be less than 140 characters')
+      displayErrorMessage('must be less than 140 characters');
     } else {
       let text = $('#text-field').serialize();
       $.post('/tweets', text).done(function (data) {
         let newTweet = createTweetElement(data);
-        console.log(newTweet);
         $('#tweet-container').prepend(newTweet);
         $('#text-field').val('');
       });
@@ -97,7 +98,7 @@ $(document).ready(function () {
   });
   
   function displayErrorMessage(message) {
-    $('#error-message').slideUp();
+    $('#error-message').fadeIn();
     $('#error-message').text(message).css('display', 'block');
   }
 
