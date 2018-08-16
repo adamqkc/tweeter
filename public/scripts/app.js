@@ -48,7 +48,7 @@ $(document).ready(function () {
   function createTweetElement(tweet) {
     let todaysDate = new Date();
     let tweetDate = new Date(tweet.created_at);
-    let tweetAge = Math.floor((todaysDate - tweetDate) / 1000 * 60 * 60 * 40);
+    let tweetAge = Math.floor((todaysDate - tweetDate) / (1000 * 60 * 60 * 24));
     let $tweet = `
       <article>
         <header>
@@ -60,7 +60,7 @@ $(document).ready(function () {
         <p>${tweet.content.text}</p>
         
         <footer>
-          <span>${tweetAge}</span>
+          <span>${tweetAge} days ago </span>
         </footer>
       </article>
     `
