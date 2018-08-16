@@ -4,7 +4,7 @@
   height: 80px;
   width: 100%;
   background-color: #00a087;
-  font-color: #e8fdff;
+  color: #e8fdff;
   padding-left: 2em;
   padding-right: 2em;
   z-index: 1;
@@ -21,4 +21,10 @@
   font-size: 200%;
   margin-left: 10px;
   line-height: 80px;
+}
+
+#nav-bar input {
+  float: right;
+  margin-right: 16em;
+  margin-top: 2em;
 }

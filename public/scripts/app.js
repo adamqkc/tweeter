@@ -74,6 +74,7 @@ $(document).ready(function () {
     }
   }
 
+  // submits 
   $('form').on('submit', function (event) {
     event.preventDefault();
 
@@ -83,6 +84,7 @@ $(document).ready(function () {
       alert('Too many characters!');
     } else {
       let text = $('#text-field').serialize();
+
       $.post('/tweets', text).done(function (data) {
         let newTweet = createTweetElement(data);
         console.log(newTweet);
@@ -90,5 +92,18 @@ $(document).ready(function () {
         $('#text-field').val('');
       });
     };
+  });
+
+
+  // Compose button - toggle composition field to display or disappear
+  $(function () {
+    $("#compose-button").on("click", function (event) {
+      if ($(".new-tweet").css("display") === "none") {
+        $(".new-tweet").slideDown("fast");
+        $("#text-field").focus();
+      } else {
+        $(".new-tweet").slideUp("fast");
+      }
+    });
   });
 });
