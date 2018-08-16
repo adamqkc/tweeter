@@ -38,7 +38,17 @@ $(document).ready(function () {
   //   }
   // ];
 
+  function loadTweets() {
+    $.ajax('/tweets', { method: 'GET' }).then(function (text_JSON) {
+      renderTweets(text_JSON);
+    })
+  }
+  loadTweets();
+
   function createTweetElement(tweet) {
+    let todaysDate = new Date();
+    let tweetDate = new Date(tweet.created_at);
+    let tweetAge = Math.floor((todaysDate - tweetDate) / 1000 * 60 * 60 * 40);
     let $tweet = `
       <article>
         <header>
@@ -50,7 +60,7 @@ $(document).ready(function () {
         <p>${tweet.content.text}</p>
         
         <footer>
-          <span>${tweet.created_at}</span>
+          <span>${tweetAge}</span>
         </footer>
       </article>
     `
@@ -64,14 +74,6 @@ $(document).ready(function () {
     }
   }
 
-  function loadTweets() {
-    $.ajax('/tweets', { method: 'GET' }).then(function (text_JSON) {
-      renderTweets(text_JSON);
-    })
-  }
-  loadTweets();
-
-  
   $('form').on('submit', function (event) {
     event.preventDefault();
 
