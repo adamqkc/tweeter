@@ -1,13 +1,18 @@
 #tweet-container {
-  border: 2px solid #ddd;
-  border-radius: 10px;
   margin-left: 2em;
   margin-right: 2em;
 }
 
+#tweet-container article {
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  margin-top: 0.5em;
+}
+
 #tweet-container header {
   border-bottom: 1px solid #eee;
-  padding-left: 10%;
+  padding-left: 5px;
+  background-color: #eee;
 }
 
 #user-handle {
@@ -22,4 +27,12 @@
 #tweet-container p {
   padding-left: 10%;
   padding-right: 10%;
+}
+
+.avatar {
+  width: 40px;
+}
+
+#user-name {
+  vertical-align: top;
 }
