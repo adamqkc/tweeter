@@ -28,8 +28,6 @@ $(document).ready(function () {
   $('form').on('submit', function (event) {
     event.preventDefault();
 
-    // $('#error-message').css('display', 'none');
-
     if ($('#text-field') === '') {
       // displayErrorMessage('cannot be empty');
     } else if ($('#text-field') > 140) {
@@ -47,7 +45,6 @@ $(document).ready(function () {
       })
     };
   });
-
 
   // Create tweet element dynamically and append to index.HTML
   function createTweetElement(tweet) {
@@ -72,12 +69,10 @@ $(document).ready(function () {
     return $tweet
   }
 
-  
   // function displayErrorMessage(message) {
   //   $('#error-message').fadeIn();
-  //   $('#error-message').text(message).css('display', 'block');
+  //   $('#error-message').text(message).css('display', 'inline');
   // }
-
 
   // Compose button - toggle to show composition field
   $(function () {
@@ -90,7 +85,6 @@ $(document).ready(function () {
       }
     });
   });
-
 
   // Escapes dangerous scripts
   function escape(str) {
