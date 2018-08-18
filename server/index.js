@@ -19,14 +19,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     console.error(`Failed to connect: ${MONGODB_URI}`);
     throw err;
   }
-
-  console.log(db.collection('tweets').find().toArray());
   console.log(`Connected to mongodb: ${MONGODB_URI}`);
-
-  // db.collection("tweets").find().toArray((err, results) => {
-  //   if (err) throw err;
-  //   console.log("results array: ", results);
-  // });
 
   const DataHelpers = require("./lib/data-helpers.js")(db);
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
