@@ -15,7 +15,6 @@ const MONGODB_URI = "mongodb://localhost:27017/tweeter";
 
 MongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
-    // db.close();
     console.error(`Failed to connect: ${MONGODB_URI}`);
     throw err;
   }
