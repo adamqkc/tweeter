@@ -23,15 +23,15 @@ $(document).ready(function () {
       $('#tweet-container').prepend($tweet);
     }
   }
-
-  // Submit tweet after validation 
+  
+  // Sends POST requets with tweet message after message validation
   $('form').on('submit', function (event) {
     event.preventDefault();
-
+    
     if ($('#text-field') === '') {
-      // displayErrorMessage('cannot be empty');
+      displayErrorMessage('Cannot be empty');
     } else if ($('#text-field') > 140) {
-      // displayErrorMessage('must be less than 140 characters');
+      displayErrorMessage('Must be less than 140 characters');
     } else {
       let text = $('#text-field').serialize();
       $.ajax({
@@ -45,6 +45,12 @@ $(document).ready(function () {
       })
     };
   });
+  
+  // Display error message if tweet is invalid
+  function displayErrorMessage(message) {
+    // $('#error-message').fadeIn();
+    // $('#error-message').text(message).css('display', 'inline');
+  }
 
   // Create tweet element dynamically and append to index.HTML
   function createTweetElement(tweet) {
@@ -60,7 +66,7 @@ $(document).ready(function () {
         </header>
         
         <p>${escape(tweet.content.text)}</p>
-        
+
         <footer>
           <span>${escape(tweetAge)} days ago </span>
         </footer>
@@ -68,11 +74,6 @@ $(document).ready(function () {
     `
     return $tweet
   }
-
-  // function displayErrorMessage(message) {
-  //   $('#error-message').fadeIn();
-  //   $('#error-message').text(message).css('display', 'inline');
-  // }
 
   // Compose button - toggle to show composition field
   $(function () {

@@ -17,6 +17,7 @@
 
 #user-handle {
   float: right;
+  margin-right: 1em;
 }
 
 #tweet-container footer {
@@ -25,8 +26,9 @@
 }
 
 #tweet-container p {
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 3%;
+  padding-right: 3%;
+  word-wrap: break-word
 }
 
 .avatar {
