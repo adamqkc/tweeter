@@ -15,3 +15,7 @@ This repository is the starter code for the project: Students will fork and clon
 
 - Express
 - Node 5.10.x or above
+
+## Screenshots
+
+!["Screenshot of app"](https://github.com/adamqkc/tweeter/blob/master/docs/Screen%20Shot%202018-08-19%20at%204.10.57%20AM.png)
