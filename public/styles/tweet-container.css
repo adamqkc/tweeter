@@ -31,6 +31,16 @@
   word-wrap: break-word
 }
 
+#icons {
+  display: none;
+  float: right;
+  margin-right: .5em;
+}
+
+#tweet-article:hover #icons {
+  display: block;
+}
+
 .avatar {
   width: 40px;
 }

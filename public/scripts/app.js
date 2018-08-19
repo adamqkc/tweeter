@@ -30,19 +30,21 @@ $(document).ready(function () {
     let tweetDate = new Date(tweet.created_at);
     let tweetAge = Math.floor((todaysDate - tweetDate) / (1000 * 60 * 60 * 24));
     let $tweet = `
-      <article>
+      <article id='tweet-article'>
         <header>
-          <img src="${escape(tweet.user.avatars.small)}" alt="">
-          <span id="user-name">${escape(tweet.user.name)}</span>
-          <span id="user-handle">${escape(tweet.user.handle)}</span>
+          <img src='${escape(tweet.user.avatars.small)}' alt='>
+          <span id='user-name'>${escape(tweet.user.name)}</span>
+          <span id='user-handle'>${escape(tweet.user.handle)}</span>
         </header>
         
         <p>${escape(tweet.content.text)}</p>
 
         <footer>
           <span>${escape(tweetAge)} days ago </span>
-          <div>
-            
+          <div id='icons'>
+            <i class='fas fa-heart'></i>
+            <i class='fas fa-share'></i>
+            <i class='fas fa-flag'></i>
           </div>
         </footer>
       </article>
@@ -79,15 +81,13 @@ $(document).ready(function () {
   }
 
   // Compose button - toggle to show composition field
-  $(function () {
-    $("#compose-button").on("click", function (event) {
-      if ($(".new-tweet").css("display") === "none") {
-        $(".new-tweet").slideDown("fast");
-        $("#text-field").focus();
-      } else {
-        $(".new-tweet").slideUp("fast");
-      }
-    });
+  $('#compose-button').on('click', function (event) {
+    if ($('.new-tweet').css('display') === 'none') {
+      $('.new-tweet').slideDown('fast');
+      $('#text-field').focus();
+    } else {
+      $('.new-tweet').slideUp('fast');
+    }
   });
 
   // Escapes dangerous scripts
