@@ -24,34 +24,6 @@ $(document).ready(function () {
     }
   }
   
-  // Sends POST requets with tweet message after message validation
-  $('form').on('submit', function (event) {
-    event.preventDefault();
-    
-    if ($('#text-field') === '') {
-      displayErrorMessage('Cannot be empty');
-    } else if ($('#text-field') > 140) {
-      displayErrorMessage('Must be less than 140 characters');
-    } else {
-      let text = $('#text-field').serialize();
-      $.ajax({
-        method: 'POST',
-        url: '/tweets',
-        data: text,
-      }).done(function (data) {
-        let tweet = createTweetElement(data);
-        $('#tweet-container').prepend(tweet);
-        $('#text-field').val('');
-      })
-    };
-  });
-  
-  // Display error message if tweet is invalid
-  function displayErrorMessage(message) {
-    // $('#error-message').fadeIn();
-    // $('#error-message').text(message).css('display', 'inline');
-  }
-
   // Create tweet element dynamically and append to index.HTML
   function createTweetElement(tweet) {
     let todaysDate = new Date();
@@ -69,10 +41,41 @@ $(document).ready(function () {
 
         <footer>
           <span>${escape(tweetAge)} days ago </span>
+          <div>
+            
+          </div>
         </footer>
       </article>
     `
     return $tweet
+  }
+
+  // Sends POST requets with tweet message after message validation
+  $('form').on('submit', function (event) {
+    event.preventDefault();
+    
+    if ($('#text-field').val() === '') {
+      displayErrorMessage('Cannot be empty');
+    } else if ($('#text-field').val().length > 140) {
+      displayErrorMessage('Must be less than 140 characters');
+    } else {
+      $('#error-message').css('display', 'none');
+      let text = $('#text-field').serialize();
+      $.ajax({
+        method: 'POST',
+        url: '/tweets',
+        data: text,
+      }).done(function (data) {
+        let tweet = createTweetElement(data);
+        $('#tweet-container').prepend(tweet);
+        $('#text-field').val('');
+      })
+    };
+  });
+  
+  // Display error message if tweet is invalid
+  function displayErrorMessage(message) {
+    $('#error-message').text(message).slideUp().css('display', 'block');
   }
 
   // Compose button - toggle to show composition field
